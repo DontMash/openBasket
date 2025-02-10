@@ -8,9 +8,10 @@
     "dist"
   ],
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "src/*"
       ]
     }
   }
