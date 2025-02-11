@@ -12,10 +12,9 @@ type RobotDisallow = {
   disallow: Array<string>;
 };
 
-export const GET: APIRoute = ({ request }) => {
-  const baseUrl = new URL(request.url);
-  const baseSitemap = `${baseUrl.protocol}//${baseUrl.host}/sitemap-index.xml`;
-  const subSitemap = `${baseUrl.origin}/sitemap-index.xml`;
+export const GET: APIRoute = ({ url }) => {
+  const baseSitemap = `${url.protocol}//${url.host}/sitemap-index.xml`;
+  const subSitemap = `${url.origin}/sitemap-index.xml`;
   const sitemaps = [baseSitemap];
   if (baseSitemap !== subSitemap) {
     sitemaps.push(subSitemap);
