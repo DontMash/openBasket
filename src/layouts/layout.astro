@@ -1,17 +1,90 @@
 ---
 import '@/styles/global.css';
+import {
+  SEO_TITLE_DEFAULT,
+  SEO_DESCRIPTION_DEFAULT,
+  SEO_OG_TITLE_DEFAULT,
+  SEO_OG_IMAGE_DEFAULT,
+  SEO_OG_IMAGE_ALT_DEFAULT,
+  SEO_OG_DESCRIPTION_DEFAULT,
+} from 'astro:env/server';
+import { SEO, type Props as AstroSEOProps } from 'astro-seo';
+
+type SEOKeywords = { keywords?: Array<string> };
+type SEOProps = Omit<
+  AstroSEOProps,
+  | 'titleTemplate'
+  | 'titleDefault'
+  | 'canonical'
+  | 'charset'
+  | 'languageAlternates'
+  | 'extend'
+> &
+  SEOKeywords;
+type Props = {
+  seo?: SEOProps;
+};
+
+const seo: AstroSEOProps = {
+  titleTemplate: `%s - ${SEO_TITLE_DEFAULT}`,
+  titleDefault: SEO_TITLE_DEFAULT,
+  description: SEO_DESCRIPTION_DEFAULT,
+  canonical: Astro.site?.origin,
+  noindex: Astro.url.origin !== Astro.site?.origin,
+  nofollow: Astro.url.origin !== Astro.site?.origin,
+  charset: 'UTF-8',
+  openGraph: {
+    basic: {
+      title: SEO_OG_TITLE_DEFAULT,
+      type: 'website',
+      image: SEO_OG_IMAGE_DEFAULT,
+      ...Astro.props.seo?.openGraph?.basic,
+    },
+    optional: {
+      description: SEO_OG_DESCRIPTION_DEFAULT,
+      siteName: SEO_TITLE_DEFAULT,
+      ...Astro.props.seo?.openGraph?.optional,
+    },
+    image: {
+      alt: SEO_OG_IMAGE_ALT_DEFAULT,
+      ...Astro.props.seo?.openGraph?.image,
+    },
+  },
+  twitter: {
+    card: 'summary',
+    title: SEO_OG_TITLE_DEFAULT,
+    image: SEO_OG_IMAGE_DEFAULT,
+    imageAlt: SEO_OG_IMAGE_ALT_DEFAULT,
+    description: SEO_OG_DESCRIPTION_DEFAULT,
+    ...Astro.props.seo?.twitter,
+  },
+  extend: {
+    link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    meta: [
+      {
+        name: 'viewport',
+        content: 'width=device-width',
+      },
+      {
+        name: 'generator',
+        content: Astro.generator,
+      },
+    ],
+  },
+};
+if (Astro.props.seo?.keywords) {
+  seo.extend?.meta?.push({
+    name: 'keywords',
+    content: Astro.props.seo?.keywords?.join(', '),
+  });
+}
 ---
 
-<!doctype html>
 <html lang='en'>
   <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <meta name='generator' content={Astro.generator} />
-    <title>Astro Starter</title>
+    <SEO {...seo} />
   </head>
   <body>
     <slot />
-  </body>
-</html>
+  </body></html
+>
