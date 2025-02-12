@@ -1,12 +1,14 @@
 // @ts-check
 import alpinejs from '@astrojs/alpinejs';
+import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, envField } from 'astro/config';
 import icon from 'astro-icon';
 
-
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()]
   },
@@ -17,6 +19,7 @@ export default defineConfig({
       iconDir: 'src/assets/icons'
     }),
   ],
+
   env: {
     schema: {
       SEO_TITLE_DEFAULT: envField.string({
@@ -50,5 +53,5 @@ export default defineConfig({
         default: 'Logo',
       }),
     }
-  }
+  },
 });
