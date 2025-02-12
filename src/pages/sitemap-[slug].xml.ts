@@ -2,6 +2,12 @@ import type { APIRoute } from 'astro';
 import config from '@/sitemap.config';
 
 export const GET: APIRoute = ({ params, site }) => {
+  if (!site) {
+    return new Response(null, {
+      status: 404,
+      statusText: 'Not found',
+    });
+  }
   if (!params.slug) {
     return new Response(null, {
       status: 404,
