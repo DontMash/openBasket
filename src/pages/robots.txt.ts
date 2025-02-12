@@ -9,24 +9,8 @@ export const GET: APIRoute = ({ url }) => {
     sitemaps.push(subSitemap);
   }
 
-  const robotsTxt = `                                      
-#                               @@@@                "All your base are belong to us"
-#                              @@@@@                
-#                    @@@@@     @@@@                 
-#                  @@@@@@@    @@@@@                 
-#                @@@@@@@@    @@@@@@@@               
-#               @@@@@@@@     @@@@@@@@@              
-#              @@@@@@@@@    @@@@  @@@@@             
-#              @@@@@@@@    @@@@    @@@@             
-#             @@@@@@@@    @@@@@    @@@@@            
-#              @@@@@@     @@@@     @@@@             
-#              @@@@@@    @@@@     @@@@@             
-#               @@@@    @@@@@    @@@@@              
-#                @@     @@@@ @@@@@@@@               
-#                      @@@@@@@@@@@@                 
-#                     @@@@@@@@@@                    
-#                    @@@@@                          
-#                    @@@@                           made by soren.codes | Sören Maschmann
+  const robotsTxt = `
+${config.header ?? ''}
 
 ${config.robots
   .map((robot) => robotToString(robot))

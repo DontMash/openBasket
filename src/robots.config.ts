@@ -1,4 +1,5 @@
 type RobotConfig = {
+  header?: string;
   robots: Array<Robot>;
 };
 export type Robot = {
@@ -14,6 +15,24 @@ type RobotDisallow = {
 };
 
 export default {
+  header: `
+#                               @@@@                "All your base are belong to us"
+#                              @@@@@                
+#                    @@@@@     @@@@                 
+#                  @@@@@@@    @@@@@                 
+#                @@@@@@@@    @@@@@@@@               
+#               @@@@@@@@     @@@@@@@@@              
+#              @@@@@@@@@    @@@@  @@@@@             
+#              @@@@@@@@    @@@@    @@@@             
+#             @@@@@@@@    @@@@@    @@@@@            
+#              @@@@@@     @@@@     @@@@             
+#              @@@@@@    @@@@     @@@@@             
+#               @@@@    @@@@@    @@@@@              
+#                @@     @@@@ @@@@@@@@               
+#                      @@@@@@@@@@@@                 
+#                     @@@@@@@@@@                    
+#                    @@@@@                          
+#                    @@@@                           made by soren.codes | Sören Maschmann`,
   robots: [
     {
       userAgent: ['*'],
