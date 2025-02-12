@@ -1,7 +1,20 @@
 import type { APIRoute } from 'astro';
 import config, { type Robot } from '@/robots.config';
 
-export const GET: APIRoute = ({ url }) => {
+export const GET: APIRoute = ({ site, url }) => {
+  if (!site) {
+    return new Response(
+      `User-agent: *
+Disallow: /`.trim(),
+    );
+  }
+  if (url.host !== site.host) {
+    return new Response(
+      `User-agent: *
+Disallow: /`.trim(),
+    );
+  }
+
   const baseSitemap = `${url.protocol}//${url.host}/sitemap-index.xml`;
   const subSitemap = `${url.origin}/sitemap-index.xml`;
   const sitemaps = [baseSitemap];
