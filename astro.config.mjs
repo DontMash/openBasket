@@ -12,7 +12,7 @@ export default defineConfig({
   },
 
   integrations: [
-    alpinejs({ entrypoint: 'src/alpine' }),
+    alpinejs({ entrypoint: 'src/alpine.config' }),
     icon({
       iconDir: 'src/assets/icons'
     }),
