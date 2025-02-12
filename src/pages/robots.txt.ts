@@ -1,16 +1,5 @@
 import type { APIRoute } from 'astro';
-
-type Robot = {
-  userAgent: Array<string>;
-} & (RobotAllow | RobotDisallow);
-type RobotAllow = {
-  allow: Array<string>;
-  disallow?: Array<string>;
-};
-type RobotDisallow = {
-  allow?: Array<string>;
-  disallow: Array<string>;
-};
+import config, { type Robot } from '@/robots.config';
 
 export const GET: APIRoute = ({ url }) => {
   const baseSitemap = `${url.protocol}//${url.host}/sitemap-index.xml`;
@@ -20,12 +9,6 @@ export const GET: APIRoute = ({ url }) => {
     sitemaps.push(subSitemap);
   }
 
-  const robots: Array<Robot> = [
-    {
-      userAgent: ['*'],
-      allow: ['/'],
-    },
-  ];
   const robotsTxt = `                                      
 #                               @@@@                "All your base are belong to us"
 #                              @@@@@                
@@ -45,7 +28,7 @@ export const GET: APIRoute = ({ url }) => {
 #                    @@@@@                          
 #                    @@@@                           made by soren.codes | Sören Maschmann
 
-${robots
+${config.robots
   .map((robot) => robotToString(robot))
   .join('\n\n')
   .trim()}
