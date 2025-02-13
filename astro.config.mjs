@@ -9,10 +9,13 @@ import icon from 'astro-icon';
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
+  prefetch: {
+    prefetchAll: true
+  },
+
   vite: {
     plugins: [tailwindcss()]
   },
-
   integrations: [
     alpinejs({ entrypoint: 'src/alpine.config' }),
     icon({
