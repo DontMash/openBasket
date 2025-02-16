@@ -39,7 +39,6 @@ export default defineConfig({
         context: 'server',
         access: 'public',
         optional: true,
-        default: 'Lol xD'
       }),
       SEO_OG_TITLE_DEFAULT: envField.string({
         context: 'server',
