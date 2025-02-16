@@ -7,6 +7,7 @@ import {
   SEO_OG_IMAGE_DEFAULT,
   SEO_OG_IMAGE_ALT_DEFAULT,
   SEO_OG_DESCRIPTION_DEFAULT,
+  SEO_KEYWORDS_DEFAULT,
 } from 'astro:env/server';
 import { SEO, type Props as AstroSEOProps } from 'astro-seo';
 
@@ -69,15 +70,16 @@ const seo: AstroSEOProps = {
         name: 'generator',
         content: Astro.generator,
       },
+      {
+        name: 'keywords',
+        content: [
+          ...SEO_KEYWORDS_DEFAULT?.split(' '),
+          ...(Astro.props.seo?.keywords ?? []),
+        ].join(', '),
+      },
     ],
   },
 };
-if (Astro.props.seo?.keywords) {
-  seo.extend?.meta?.push({
-    name: 'keywords',
-    content: Astro.props.seo?.keywords?.join(', '),
-  });
-}
 ---
 
 <html lang='en'>
