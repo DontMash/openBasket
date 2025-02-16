@@ -35,7 +35,7 @@ const seo: AstroSEOProps = {
   charset: 'UTF-8',
   openGraph: {
     basic: {
-      title: SEO_OG_TITLE_DEFAULT,
+      title: SEO_OG_TITLE_DEFAULT ?? SEO_TITLE_DEFAULT,
       type: 'website',
       image: SEO_OG_IMAGE_DEFAULT,
       ...Astro.props.seo?.openGraph?.basic,

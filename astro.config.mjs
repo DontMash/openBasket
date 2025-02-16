@@ -33,17 +33,17 @@ export default defineConfig({
       SEO_DESCRIPTION_DEFAULT: envField.string({
         context: 'server',
         access: 'public',
-        default: 'Get started with Astro on your next project. It uses eslint, prettier, tailwindcss, aplinejs and some more to provide every tool needed for a great website.',
+        optional: true,
       }),
       SEO_OG_TITLE_DEFAULT: envField.string({
         context: 'server',
         access: 'public',
-        default: 'Astro is ♥',
+        optional: true,
       }),
       SEO_OG_DESCRIPTION_DEFAULT: envField.string({
         context: 'server',
         access: 'public',
-        default: 'Astro is awesome because it is so simple and easy to integrate with.',
+        optional: true,
       }),
       SEO_OG_IMAGE_DEFAULT: envField.string({
         context: 'server',
