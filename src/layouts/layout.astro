@@ -73,7 +73,7 @@ const seo: AstroSEOProps = {
       {
         name: 'keywords',
         content: [
-          ...SEO_KEYWORDS_DEFAULT?.split(' '),
+          ...(SEO_KEYWORDS_DEFAULT?.split(' ') ?? []),
           ...(Astro.props.seo?.keywords ?? []),
         ].join(', '),
       },
