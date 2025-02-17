@@ -8,6 +8,7 @@
     "dist"
   ],
   "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
