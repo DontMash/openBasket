@@ -1,0 +1,9 @@
+---
+import { actions } from 'astro:actions';
+---
+
+<form method='post' action={actions.auth.login}>
+  <input type='text' name='username' />
+  <input type='password' name='password' />
+  <button>Submit</button>
+</form>

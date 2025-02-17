@@ -1,0 +1,10 @@
+---
+import { actions } from 'astro:actions';
+---
+
+<form method='post' action={actions.auth.register}>
+  <input type='text' name='username' />
+  <input type='email' name='email' />
+  <input type='password' name='password' />
+  <button>Submit</button>
+</form>
