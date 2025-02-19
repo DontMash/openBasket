@@ -1,16 +1,21 @@
+import { BASKET_SERVER, IDENTITY_SERVER } from 'astro:env/server';
 import { defineMiddleware } from 'astro:middleware';
 import createClient from 'openapi-fetch';
 import type { paths as identityPaths } from '@/identity-api-schema';
-import { IDENTITY_SERVER } from 'astro:env/server';
+import type { paths as basketPaths } from '@/basket-api-schema';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const identity = createClient<identityPaths>({
     baseUrl: IDENTITY_SERVER,
   });
+  const basket = createClient<basketPaths>({
+    baseUrl: BASKET_SERVER,
+  });
   context.locals.api = {
     identity,
+    basket,
   };
-  
+
   const user = context.cookies.get('auth')?.json();
   if (!user) {
     return next();
@@ -22,7 +27,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       refreshToken: user.refreshToken,
     },
   });
-  
+
   if (result.error) {
     console.error(result);
     return next();
