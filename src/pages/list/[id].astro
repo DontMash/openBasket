@@ -1,5 +1,10 @@
 ---
+import { actions } from 'astro:actions';
+import { Icon } from 'astro-icon/components';
+
 import Layout from '@/layouts/layout.astro';
+import Items from '@/components/basket/items.astro';
+import Loading from '@/components/loading.astro';
 
 const { id } = Astro.params;
 
@@ -13,15 +18,32 @@ const result = await Astro.locals.api.basket.GET('/api/list/{id}', {
 ---
 
 <Layout>
-  {result.data?.displayName}
-  <ul>
-    {
-      result.data?.items?.map((item) => (
-        <li>
-          {item.displayName} - {item.quantity} - {item.unit}
-        </li>
-      ))
-    }
-  </ul>
-  {result.error}
+  <section class='prose'>
+    <a href='/list'>
+      <Icon class='text-4xl' name='tabler:arrow-left' />
+    </a>
+    <h1>
+      {result.data?.displayName}
+    </h1>
+
+    <Items {id} server:defer>
+      <Loading slot='fallback' />
+    </Items>
+  </section>
+
+  <section class='prose'>
+    <h2> Add item to list </h2>
+
+    <form method='post' action={actions.basket.list.addItem}>
+      <input type='hidden' name='listId' value={id} />
+      <input type='text' name='itemId' placeholder='Item' />
+      <input
+        type='text'
+        inputmode='numeric'
+        name='quantity'
+        placeholder='Quantity'
+      />
+      <button>Submit</button>
+    </form>
+  </section>
 </Layout>

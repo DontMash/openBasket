@@ -1,0 +1,20 @@
+---
+import { actions } from 'astro:actions';
+
+import Layout from '@/layouts/layout.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout>
+  <section class='prose'>
+    <a href='/list'>
+      <Icon class='text-4xl' name='tabler:arrow-left' />
+    </a>
+    <h1> Create a new list </h1>
+
+    <form method='post' action={actions.basket.list.create}>
+      <input type='text' name='displayName' placeholder="Displayname" />
+      <button>Submit</button>
+    </form>
+  </section>
+</Layout>

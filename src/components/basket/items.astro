@@ -1,0 +1,24 @@
+---
+type Props = {
+  id: string;
+};
+const { id } = Astro.props;
+
+const result = await Astro.locals.api.basket.GET('/api/list/{id}', {
+  params: { path: { id } },
+});
+---
+
+{
+  result.data && (
+    <ul>
+      {result.data?.items?.map((item) => (
+        <li>
+          {item.displayName} - {item.quantity} - {item.unit}
+        </li>
+      ))}
+    </ul>
+  )
+}
+{!result.error && !result.data.items?.length && <p>No entries available.</p>}
+{result.error && <p class='text-error'>Failed to get entries.</p>}

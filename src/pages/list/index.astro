@@ -1,5 +1,5 @@
 ---
-import { actions } from 'astro:actions';
+import { Icon } from 'astro-icon/components';
 
 import Layout from '@/layouts/layout.astro';
 import Lists from '@/components/basket/lists.astro';
@@ -7,36 +7,19 @@ import Loading from '@/components/loading.astro';
 ---
 
 <Layout>
-  <section class="prose">
-    <h1>
-      Lists
-    </h1>
+  <section class='prose'>
+    <div class="flex items-center">
+      <h1> Lists </h1>
+
+      <div class="ml-auto">
+        <a href='/list/create'>
+          <Icon name='tabler:plus' />
+        </a>
+      </div>
+    </div>
 
     <Lists server:defer>
       <Loading slot='fallback' />
     </Lists>
   </section>
-
-  <section>
-    Create list
-    <form method='post' action={actions.basket.list.create}>
-      <input type='text' name='displayName' />
-      <button>Submit</button>
-    </form>
-  </section>
-
-  Update list
-  <form method='post' action={actions.basket.list.update}>
-    <input type='text' name='id' />
-    <input type='text' name='displayName' />
-    <button>Submit</button>
-  </form>
-
-  Add item to list
-  <form method='post' action={actions.basket.list.addItem}>
-    <input type='text' name='itemId' />
-    <input type='text' inputmode='numeric' name='quantity' />
-    <input type='text' name='listId' />
-    <button>Submit</button>
-  </form>
 </Layout>

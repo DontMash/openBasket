@@ -1,5 +1,6 @@
 ---
 import { actions } from 'astro:actions';
+import { Icon } from 'astro-icon/components';
 
 const result = await Astro.locals.api.basket.GET('/api/list');
 ---
@@ -11,9 +12,16 @@ const result = await Astro.locals.api.basket.GET('/api/list');
         <li>
           <span>{list.displayName}</span> -{' '}
           <a href={`/list/${list.id}`}>{list.id}</a>
+          <a href={`/list/${list.id}/edit`}>
+            <Icon name='tabler:edit' />
+            <span class='sr-only'>Edit</span>
+          </a>
           <form method='post' action={actions.basket.list.delete}>
             <input type='hidden' name='id' value={list.id} />
-            <button>Delete</button>
+            <button class='text-error'>
+              <Icon name='tabler:trash' />
+              <span class='sr-only'>Delete</span>
+            </button>
           </form>
         </li>
       ))}

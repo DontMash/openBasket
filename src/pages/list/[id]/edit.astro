@@ -1,0 +1,30 @@
+---
+import Layout from '@/layouts/layout.astro';
+import { Icon } from 'astro-icon/components';
+import { actions } from 'astro:actions';
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect('/404');
+}
+
+const result = await Astro.locals.api.basket.GET('/api/list/{id}', {
+  params: { path: { id } },
+});
+---
+
+<Layout>
+  <section class='prose'>
+    <a href='/list'>
+      <Icon class='text-4xl' name='tabler:arrow-left' />
+    </a>
+    <h1>Edit {result.data?.displayName}</h1>
+
+    <form method='post' action={actions.basket.list.update}>
+      <input type='hidden' name='id' value={id} />
+      <input type='text' name='displayName' placeholder='Displayname' />
+      <button>Submit</button>
+    </form>
+  </section>
+</Layout>
