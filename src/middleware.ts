@@ -30,11 +30,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (result.error) {
     console.error(result);
-    return next();
   }
 
-  context.cookies.set('auth', result.data);
-  context.locals.user = result.data;
+  if (result.data) {
+    context.cookies.set('auth', result.data);
+    context.locals.user = result.data;
+  }
 
   return next();
 });
