@@ -9,6 +9,6 @@
 
 @layer base {
   [data-icon] {
-    @apply inline-block size-6 align-text-bottom;
+    @apply inline-block text-2xl align-text-bottom;
   }
 }
