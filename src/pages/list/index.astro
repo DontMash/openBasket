@@ -1,43 +1,42 @@
 ---
 import { actions } from 'astro:actions';
 
-const result = await Astro.locals.api.basket.GET('/api/list');
-
-console.log(Astro.getActionResult(actions.basket.list.addItem));
-
+import Layout from '@/layouts/layout.astro';
+import Lists from '@/components/basket/lists.astro';
+import Loading from '@/components/loading.astro';
 ---
 
-Create list
-<form method='post' action={actions.basket.list.create}>
-  <input type='text' name='displayName' />
-  <button>Submit</button>
-</form>
+<Layout>
+  <section class="prose">
+    <h1>
+      Lists
+    </h1>
 
-<ul>
-  {
-    result.data?.map((list) => (
-      <li>
-        <span>{list.displayName}</span> - <a href={`/list/${list.id}`}>{list.id}</a>
-        <form method='post' action={actions.basket.list.delete}>
-          <input type='hidden' name='id' value={list.id} />
-          <button>Delete</button>
-        </form>
-      </li>
-    ))
-  }
-</ul>
+    <Lists server:defer>
+      <Loading slot='fallback' />
+    </Lists>
+  </section>
 
-Update list
-<form method='post' action={actions.basket.list.update}>
-  <input type='text' name='id' />
-  <input type='text' name='displayName' />
-  <button>Submit</button>
-</form>
+  <section>
+    Create list
+    <form method='post' action={actions.basket.list.create}>
+      <input type='text' name='displayName' />
+      <button>Submit</button>
+    </form>
+  </section>
 
-Add item to list
-<form method='post' action={actions.basket.list.addItem}>
-  <input type='text' name='itemId' />
-  <input type='text' inputmode='numeric' name='quantity' />
-  <input type='text' name='listId' />
-  <button>Submit</button>
-</form>
+  Update list
+  <form method='post' action={actions.basket.list.update}>
+    <input type='text' name='id' />
+    <input type='text' name='displayName' />
+    <button>Submit</button>
+  </form>
+
+  Add item to list
+  <form method='post' action={actions.basket.list.addItem}>
+    <input type='text' name='itemId' />
+    <input type='text' inputmode='numeric' name='quantity' />
+    <input type='text' name='listId' />
+    <button>Submit</button>
+  </form>
+</Layout>

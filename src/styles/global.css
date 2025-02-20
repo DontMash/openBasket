@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
+@config "@/../tailwind.config.js";
+
+@theme {
+  --color-error: oklch(62.8% 0.2352 29.23);
+}
 
 @layer base {
   [data-icon] {

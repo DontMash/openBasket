@@ -1,0 +1,24 @@
+---
+import { actions } from 'astro:actions';
+
+const result = await Astro.locals.api.basket.GET('/api/list');
+---
+
+{
+  result.data && (
+    <ul>
+      {result.data?.map((list) => (
+        <li>
+          <span>{list.displayName}</span> -{' '}
+          <a href={`/list/${list.id}`}>{list.id}</a>
+          <form method='post' action={actions.basket.list.delete}>
+            <input type='hidden' name='id' value={list.id} />
+            <button>Delete</button>
+          </form>
+        </li>
+      ))}
+    </ul>
+  )
+}
+{!result.error && !result.data && <p>No entries available.</p>}
+{result.error && <p class='text-error'>Failed to get entries.</p>}
