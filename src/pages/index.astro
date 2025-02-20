@@ -1,15 +1,14 @@
 ---
 import Layout from '@/layouts/layout.astro';
-import { Icon } from 'astro-icon/components';
 ---
 
 <Layout>
-  <Icon name='logo' />
-  Index
-
-  <div x-data='{ count: 0 }'>
-    <button x-on:click='count++'>Increment</button>
-
-    <span x-text='count'></span>
-  </div>
+  <ul>
+    <li>
+      <a href='/list'>Lists</a>
+    </li>
+    <li>
+      <a href='/item'>Items</a>
+    </li>
+  </ul>
 </Layout>
