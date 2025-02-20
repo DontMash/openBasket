@@ -10,6 +10,7 @@ import {
   SEO_KEYWORDS_DEFAULT,
 } from 'astro:env/server';
 import { SEO, type Props as AstroSEOProps } from 'astro-seo';
+import { Icon } from 'astro-icon/components';
 
 type SEOKeywords = { keywords?: Array<string> };
 type SEOProps = Omit<
@@ -87,6 +88,17 @@ const seo: AstroSEOProps = {
     <SEO {...seo} />
   </head>
   <body>
-    <slot />
+    <header class='sticky inset-x-0 top-0'>
+      <div class='mx-auto max-w-7xl h-16'>
+        <a href='/'>
+          <Icon name='logo' />
+          openBasket
+        </a>
+      </div>
+    </header>
+
+    <main class='mx-auto max-w-7xl'>
+      <slot />
+    </main>
   </body></html
 >
