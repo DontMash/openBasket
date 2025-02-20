@@ -1,4 +1,6 @@
 ---
+import Layout from '@/layouts/layout.astro';
+
 const { id } = Astro.params;
 
 if (!id) {
@@ -10,14 +12,16 @@ const result = await Astro.locals.api.basket.GET('/api/list/{id}', {
 });
 ---
 
-{result.data?.displayName}
-<ul>
-  {
-    result.data?.items?.map((item) => (
-      <li>
-        {item.displayName} - {item.quantity} - {item.unit}
-      </li>
-    ))
-  }
-</ul>
-{result.error}
+<Layout>
+  {result.data?.displayName}
+  <ul>
+    {
+      result.data?.items?.map((item) => (
+        <li>
+          {item.displayName} - {item.quantity} - {item.unit}
+        </li>
+      ))
+    }
+  </ul>
+  {result.error}
+</Layout>

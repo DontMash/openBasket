@@ -1,33 +1,38 @@
 ---
 import { actions } from 'astro:actions';
 
+import Layout from '@/layouts/layout.astro';
+
 const result = await Astro.locals.api.basket.GET('/api/listitem');
 ---
 
-Create list item
-<form method='post' action={actions.basket.item.create}>
-  <input type='text' name='displayName' />
-  <input type='text' name='unit' />
-  <button>Submit</button>
-</form>
+<Layout>
+  Create list item
+  <form method='post' action={actions.basket.item.create}>
+    <input type='text' name='displayName' />
+    <input type='text' name='unit' />
+    <button>Submit</button>
+  </form>
 
-<ul>
-  {
-    result.data?.map((item) => (
-      <li>
-        <span>{item.displayName}</span> - <span>{item.unit}</span> - <span>{item.id}</span>
-        <form method='post' action={actions.basket.item.delete}>
-          <input type='hidden' name='id' value={item.id} />
-          <button>Delete</button>
-        </form>
-      </li>
-    ))
-  }
-</ul>
+  <ul>
+    {
+      result.data?.map((item) => (
+        <li>
+          <span>{item.displayName}</span> - <span>{item.unit}</span> -{' '}
+          <span>{item.id}</span>
+          <form method='post' action={actions.basket.item.delete}>
+            <input type='hidden' name='id' value={item.id} />
+            <button>Delete</button>
+          </form>
+        </li>
+      ))
+    }
+  </ul>
 
-Update list item
-<form method='post' action={actions.basket.item.update}>
-  <input type='text' name='id' />
-  <input type='text' name='displayName' />
-  <button>Submit</button>
-</form>
+  Update list item
+  <form method='post' action={actions.basket.item.update}>
+    <input type='text' name='id' />
+    <input type='text' name='displayName' />
+    <button>Submit</button>
+  </form>
+</Layout>
