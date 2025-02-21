@@ -26,11 +26,11 @@ export default defineConfig({
   env: {
     schema: {
       IDENTITY_SERVER: envField.string({
-        context:'server',
+        context: 'server',
         access: 'secret',
       }),
       BASKET_SERVER: envField.string({
-        context:'server',
+        context: 'server',
         access: 'secret',
       }),
       SEO_TITLE_DEFAULT: envField.string({

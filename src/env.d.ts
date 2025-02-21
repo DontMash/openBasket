@@ -5,11 +5,11 @@ import type { paths as basketPaths } from '@/basket-api-schema';
 declare global {
   namespace App {
     interface Locals {
-      user: {
-        userId?: string;
-        accessToken?: string;
-        refreshToken?: string;
-        expiresAt?: string;
+      user?: {
+        userId: string;
+        accessToken: string;
+        refreshToken: string;
+        expiresAt: string;
       };
       api: {
         identity: Client<identityPaths>;

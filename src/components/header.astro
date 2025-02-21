@@ -1,19 +1,28 @@
 ---
+import { actions } from 'astro:actions';
 import { Icon } from 'astro-icon/components';
+
+const user = Astro.locals.user;
 ---
 
 <header class='sticky inset-x-0 top-0'>
   <div class='mx-auto flex h-16 max-w-7xl items-center'>
-    <a class='flex items-center text-2xl  font-bold' href='/'>
-      <Icon class="size-8" name='logo' />
+    <a class='flex items-center text-2xl font-bold' href='/'>
+      <Icon class='size-8' name='logo' />
       openBasket
     </a>
 
     <div class='ml-auto'>
-      <a href='/register'>Register</a>
-      <a href='/login'>Login</a>
-      <a href='/reset-password'>Reset</a>
-      <a href='/logout'>Logout</a>
+      {!user && (
+        <a href='/register'>Register</a>
+        <a href='/login'>Login</a>
+      )}
+      {user && (
+        <a href='/change-password'>Password</a>
+        <form method='post' action={actions.auth.logout}>
+          <button>Logout</button>
+        </form>
+        )}
     </div>
   </div>
 </header>

@@ -2,13 +2,23 @@
 import { actions } from 'astro:actions';
 
 import Layout from '@/layouts/layout.astro';
+
+const result = Astro.getActionResult(actions.auth.register);
+if (result && !result.error) {
+  return Astro.redirect('/login');
+}
 ---
 
 <Layout>
-  <form method='post' action={actions.auth.register}>
-    <input type='text' name='username' />
-    <input type='email' name='email' />
-    <input type='password' name='password' />
-    <button>Submit</button>
-  </form>
+  <section class='prose'>
+    <h1>Register</h1>
+
+    <form method='post' action={actions.auth.register}>
+      <input type='text' name='username' placeholder='Username' />
+      <input type='email' name='email' placeholder='Email' />
+      <input type='password' name='password' placeholder='Password' />
+      <button>Submit</button>
+    </form>
+    {result && result.error && <p class='text-error'>{result.error.code}</p>}
+  </section>
 </Layout>

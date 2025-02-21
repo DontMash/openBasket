@@ -1,8 +1,9 @@
 import { BASKET_SERVER, IDENTITY_SERVER } from 'astro:env/server';
 import { defineMiddleware } from 'astro:middleware';
+import { jwtDecode } from 'jwt-decode';
 import createClient from 'openapi-fetch';
-import type { paths as identityPaths } from '@/identity-api-schema';
 import type { paths as basketPaths } from '@/basket-api-schema';
+import type { paths as identityPaths } from '@/identity-api-schema';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const identity = createClient<identityPaths>({
@@ -12,29 +13,38 @@ export const onRequest = defineMiddleware(async (context, next) => {
     baseUrl: BASKET_SERVER,
   });
   context.locals.api = {
-    identity,
     basket,
+    identity,
   };
 
-  const user = context.cookies.get('auth')?.json();
-  if (!user) {
-    return next();
+  if (context.cookies.has('auth')) {
+    const auth = context.cookies.get('auth');
+    if (auth) {
+      context.locals.user = auth?.json();
+    }
   }
 
-  const result = await identity.POST('/api/auth/refresh-token', {
-    body: {
-      userId: user.userId,
-      refreshToken: user.refreshToken,
-    },
-  });
+  const user = context.locals.user;
+  if (user) {
+    const accessData = jwtDecode(user.accessToken);
+    if (accessData?.exp && Date.now() < accessData.exp * 1000) {
+      return next();
+    }
 
-  if (result.error) {
-    console.error(result);
-  }
+    const result = await identity.POST('/api/auth/refresh-token', {
+      body: { userId: user.userId, refreshToken: user.refreshToken },
+    });
 
-  if (result.data) {
-    context.cookies.set('auth', result.data);
-    context.locals.user = result.data;
+    if (result && result.error) {
+      console.error(result, user);
+      context.cookies.delete('auth');
+      context.locals.user = undefined;
+    }
+
+    if (result && !result.error) {
+      context.cookies.set('auth', result.data);
+      context.locals.user = result.data;
+    }
   }
 
   return next();

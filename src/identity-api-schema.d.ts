@@ -172,6 +172,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/auth/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ChangePasswordDto"];
+                    "text/json": components["schemas"]["ChangePasswordDto"];
+                    "application/*+json": components["schemas"]["ChangePasswordDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/test": {
         parameters: {
             query?: never;
@@ -324,6 +363,12 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ChangePasswordDto: {
+            /** Format: uuid */
+            userId?: string;
+            oldPassword?: string;
+            newPassword?: string;
+        };
         LoginUserDto: {
             username?: string;
             password?: string;
@@ -340,11 +385,11 @@ export interface components {
         };
         TokenSetDto: {
             /** Format: uuid */
-            userId?: string;
-            accessToken?: string;
-            refreshToken?: string;
+            userId: string;
+            accessToken: string;
+            refreshToken: string;
             /** Format: date-time */
-            expiresAt?: string;
+            expiresAt: string;
         };
         User: {
             /** Format: uuid */
